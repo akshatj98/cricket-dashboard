@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cricket Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">🏏</span>
+        <span class="logo-text">Cricket<span class="logo-accent">HQ</span></span>
+      </div>
+      <div class="team-flags">
+        <span class="flag-badge india" title="India">🇮🇳 India</span>
+        <span class="flag-badge england" title="England">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="last-updated" id="lastUpdated">Last updated: —</div>
+      <button class="refresh-btn" id="refreshBtn" title="Refresh news">
+        <span class="refresh-icon" id="refreshIcon">↻</span>
+        Refresh
+      </button>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-section">
+      <span class="filter-label">TEAM</span>
+      <div class="filter-group" id="teamFilters">
+        <button class="filter-btn active" data-team="all">All</button>
+        <button class="filter-btn india-btn" data-team="india">🇮🇳 India</button>
+        <button class="filter-btn england-btn" data-team="england">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</button>
+        <button class="filter-btn saved-btn" data-team="saved">★ Saved</button>
+      </div>
+    </div>
+    <div class="filter-section">
+      <span class="filter-label">FORMAT</span>
+      <div class="filter-group" id="formatFilters">
+        <button class="filter-btn active" data-format="all">All Formats</button>
+        <button class="filter-btn test-btn" data-format="test">Test</button>
+        <button class="filter-btn odi-btn" data-format="odi">ODI</button>
+        <button class="filter-btn t20-btn" data-format="t20">T20</button>
+        <button class="filter-btn ipl-btn" data-format="ipl">IPL</button>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍  Search headlines..." />
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-value" id="statTotal">0</span>
+      <span class="stat-label">Articles</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value india-color" id="statIndia">0</span>
+      <span class="stat-label">India</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value england-color" id="statEngland">0</span>
+      <span class="stat-label">England</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value saved-color" id="statSaved">0</span>
+      <span class="stat-label">Saved</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value muted-color" id="statRead">0</span>
+      <span class="stat-label">Read</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- LOADING STATE -->
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p class="loading-text">Fetching latest cricket news...</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="error-state hidden" id="errorState">
+      <div class="error-icon">⚠️</div>
+      <p class="error-text">Could not load some feeds. Check your connection.</p>
+      <button class="refresh-btn" onclick="loadFeeds()">Try Again</button>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state hidden" id="emptyState">
+      <div class="empty-icon">🏏</div>
+      <p class="empty-text">No articles match your filters.</p>
+    </div>
+
+    <!-- NEWS GRID -->
+    <div class="news-grid" id="newsGrid"></div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Sources: BBC Sport · ESPN Cricinfo · Cricbuzz · Google News &nbsp;|&nbsp; Auto-refreshes every 5 minutes</p>
+  </footer>
+
+  <!-- ARTICLE CARD TEMPLATE -->
+  <template id="cardTemplate">
+    <article class="news-card">
+      <div class="card-header">
+        <div class="card-meta-left">
+          <span class="source-badge"></span>
+          <span class="team-tag"></span>
+          <span class="format-tag"></span>
+        </div>
+        <div class="card-actions">
+          <button class="action-btn save-btn" title="Save article">★</button>
+          <button class="action-btn read-btn" title="Mark as read">✓</button>
+        </div>
+      </div>
+      <div class="card-image-wrap">
+        <img class="card-image" src="" alt="" loading="lazy" />
+      </div>
+      <div class="card-body">
+        <h2 class="card-title"></h2>
+        <p class="card-description"></p>
+      </div>
+      <div class="card-footer">
+        <span class="card-time"></span>
+        <a class="card-link" href="#" target="_blank" rel="noopener noreferrer">Read more →</a>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
